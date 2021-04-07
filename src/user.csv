@@ -1,2 +1,2 @@
-id;nama;deskripsi;jumlah;rarity;tahun_ditemukan
-10924855;bagas;ngewe;2;S+;2002
+id;username;nama;alamat;password;role
+000000;admin;admin;-;admin1234;admin

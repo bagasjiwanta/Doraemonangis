@@ -19,9 +19,10 @@ def lineSplit(listToSplit):
 
         b += 1   
     return outputList  
-def parser(inputCsv):
-    csvFile = open(inputCsv,'r')
-    csvData = csvFile.readlines()
+
+
+def openParse(inputCsv):
+    csvData = open(inputCsv,'r').readlines()
     csvDataLength = len(csvData)
     outputCsv = [[0] for i in range(csvDataLength)]
 
@@ -29,3 +30,5 @@ def parser(inputCsv):
         outputCsv[i] = lineSplit(csvData[i])
     return outputCsv
         
+def writeParse(inputCsv):
+    
