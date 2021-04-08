@@ -1,8 +1,12 @@
 import os 
 import sys
-from modules import csvParser, access, random
+from time import sleep 
+from modules import csvParser
+from modules import randomizer
+from modules import access
 
-# Files & data structure 
+# File dan struktur data 
+# Bentuk string, bisa langsung di parse dengan csvParser
 userFiles = os.path.join(sys.path[0], 'src/user.csv')
 gadgets = os.path.join(sys.path[0], 'src/gadget.csv')
 gadgetBorHis = os.path.join(sys.path[0], 'src/gadget_borrow_history.csv')
@@ -14,17 +18,36 @@ consumablesHis = os.path.join(sys.path[0], 'src/consumable_history.csv')
 # GUI section 
 # end of GUI section 
 
-if __name__=="__main__":
-    command = '' 
-    while True:
-        command = input()
-        status = "admin"
-        if command.lower() == "register":
-            access.register(csvParser.parser(userFiles), status)
+# id user dan role user (yang menggunakan sekarang)
+userID = ''
+userRole = ''
 
-        elif command.lower() == "exit":
-            exit 
+if __name__=="__main__":
+
+    # ini harusnya masuk ke GUI sih tpi tolong dong dibikinin nanti GUI nya 
+    # gw nggak ngide mau gimana :( 
+    sleep(1)
+    print("\n---------------------\nSelamat datang di kantong ajaib\n"
+    "---------------------\nMasukkan command")
+    command = '' 
+    sleep(1)
+    # 
+
+    while True:
+        command = input("[%s:%s] > "%(userRole, userID))
+        
+        # list command dibawah sini
+        if command.lower() == "exit":
+            exit
+            break 
+
+        elif command.lower() == "register":
+            access.register(userFiles, userRole)
+
+        elif command.lower() == "login":
+            userID, userRole = access.login(userFiles)
+
         else:
             print("command tidak dikenali, coba lagi")
-    else:
-        print("tubes anjeng")
+    
+       
