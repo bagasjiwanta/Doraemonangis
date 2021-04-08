@@ -46,7 +46,19 @@ if __name__=="__main__":
 
         elif command.lower() == "login":
             userID, userRole = access.login(userFiles)
-
+        
+        elif command.lower() =="carirarity":
+            listgadgets=csvParser.openParse(gadgets)
+            rarity=input("Masukkan rarity: ")
+            print("\nHasil pencarian:\n")
+            for i in range (len(listgadgets)):
+                if listgadgets[i][4]==rarity:
+                    print("Nama: %s"%listgadgets[i][1])
+                    print("Deskripsi: %s"%listgadgets[i][2])
+                    print("Jumlah: %s"%listgadgets[i][3])
+                    print("Rarity: %s"%listgadgets[i][4])
+                    print("Tahun Ditemukan: %s"%listgadgets[i][5])
+                    print()
         else:
             print("command tidak dikenali, coba lagi")
     
