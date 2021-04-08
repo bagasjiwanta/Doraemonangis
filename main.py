@@ -4,6 +4,7 @@ from time import sleep
 from modules import csvParser
 from modules import randomizer
 from modules import access
+from modules import cari
 
 # File dan struktur data 
 # Bentuk string, bisa langsung di parse dengan csvParser
@@ -50,15 +51,14 @@ if __name__=="__main__":
         elif command.lower() =="carirarity":
             listgadgets=csvParser.openParse(gadgets)
             rarity=input("Masukkan rarity: ")
-            print("\nHasil pencarian:\n")
-            for i in range (len(listgadgets)):
-                if listgadgets[i][4]==rarity:
-                    print("Nama: %s"%listgadgets[i][1])
-                    print("Deskripsi: %s"%listgadgets[i][2])
-                    print("Jumlah: %s"%listgadgets[i][3])
-                    print("Rarity: %s"%listgadgets[i][4])
-                    print("Tahun Ditemukan: %s"%listgadgets[i][5])
-                    print()
+            cari.carirarity(rarity,listgadgets)
+
+        elif command.lower() == "caritahun":
+            listgadgets=csvParser.openParse(gadgets)
+            tahun=input("Masukkan tahun: ")
+            kategori=input("Masukkan kategori: ")
+            cari.caritahun(tahun, kategori, listgadgets)
+
         else:
             print("command tidak dikenali, coba lagi")
     
