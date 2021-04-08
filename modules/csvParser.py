@@ -1,4 +1,4 @@
-def lineSplit(listToSplit):
+def splitLine(listToSplit):
     a, b = 0, 0
     outputList = []
     while b < len(listToSplit):
@@ -20,15 +20,23 @@ def lineSplit(listToSplit):
         b += 1   
     return outputList  
 
-
 def openParse(inputCsv):
     csvData = open(inputCsv,'r').readlines()
     csvDataLength = len(csvData)
     outputCsv = [[0] for i in range(csvDataLength)]
 
     for i in range(csvDataLength):
-        outputCsv[i] = lineSplit(csvData[i])
+        outputCsv[i] = splitLine(csvData[i])
     return outputCsv
         
-def writeParse(inputCsv):
+def writeParse(inputData, csvToWrite):
+    csvData = open(inputData, 'w')
+    csvData.writelines(inputData)
+    csvData.close()
+
+def appendParse(inputLine, csvToWrite):
+    csvData = open(csvToWrite, "a")
+    csvData.write("\n")
+    csvData.write(inputLine)
+    csvData.close()
     
