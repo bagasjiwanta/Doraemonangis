@@ -60,4 +60,3 @@ def login(userListCsv):
                 elif command.lower() != 'y':
                     print("command tidak dikenali, ulangi login? [y/n]")               
 
-
