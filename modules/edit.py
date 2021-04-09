@@ -1,4 +1,4 @@
-from .csvParser import openParse, appendParse
+from .csvParser import openParse, appendParse, writeParse, combineParse
 
 def tambahgadget(itemID, listgadgets, gadgetListCsv):
     validID=True
@@ -54,4 +54,38 @@ def tambahconsum(itemID, listconsum, consumListCsv):
             else:
                 print("Input rarity tidak valid!")
 
+def hapus(itemID, itemList, itemListCsv):
+    index = 0
+    for i in itemList:
+        if i[0] == itemID:
+            caution = input("Apakah anda yakin ingin menghapus %s (Y/N)? "%(i[1]))
+            if caution.lower() == 'y':
+                itemList.remove(i)
+                writeParse(combineParse(itemList), itemListCsv)
+                print("Item tersebut telah berhasil dihapus dari database")
+                break
+            else: 
+                break 
+             
+    else: 
+        print("\nTidak ada item dengan ID tersebut.")
 
+def jumlah(itemID, itemList, itemListCsv):
+    notFound=True
+    for i in range (len(itemList)):
+        if itemList[i][0] == itemID:
+            notFound=False
+            jumlah=int(input("Masukan Jumlah: "))
+            if jumlah>=0:
+                itemList[i][3]=str(int(itemList[i][3])+jumlah)
+                print("%d %s berhasil ditambahkan. Stok sekarang: %s"%(jumlah, itemList[i][1],itemList[i][3]))
+                writeParse(combineParse(itemList), itemListCsv)
+            if jumlah<0:
+                if int(itemList[i][3])>((-1)*jumlah):
+                    itemList[i][3]=str(int(itemList[i][3])+jumlah)
+                    print("%d %s berhasil dibuang. Stok sekarang: %s"%((-1)*jumlah, itemList[i][1],itemList[i][3]))
+                    writeParse(combineParse(itemList), itemListCsv)
+                elif int(itemList[i][3])<((-1)*jumlah):
+                    print("%d %s gagal dibuang karena stok kurang. Stok sekarang: %s (<%d)"%((-1)*jumlah, itemList[i][1],itemList[i][3],(-1)*jumlah))
+    if notFound:
+        print("Tidak ada item dengan ID tersebut!")
