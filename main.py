@@ -4,6 +4,7 @@ from time import sleep
 from modules import csvParser
 from modules import randomizer
 from modules import access
+from modules import cari
 
 # File dan struktur data 
 # Bentuk string, bisa langsung di parse dengan csvParser
@@ -46,6 +47,17 @@ if __name__=="__main__":
 
         elif command.lower() == "login":
             userID, userRole = access.login(userFiles)
+        
+        elif command.lower() =="carirarity":
+            listgadgets=csvParser.openParse(gadgets)
+            rarity=input("Masukkan rarity: ")
+            cari.carirarity(rarity,listgadgets)
+
+        elif command.lower() == "caritahun":
+            listgadgets=csvParser.openParse(gadgets)
+            tahun=input("Masukkan tahun: ")
+            kategori=input("Masukkan kategori: ")
+            cari.caritahun(tahun, kategori, listgadgets)
 
         else:
             print("command tidak dikenali, coba lagi")
