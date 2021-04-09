@@ -33,7 +33,7 @@ def register(userListCsv, acc):
         print("User baru telah ditambahkan")
         
     else:
-        print("Anda tidak memiliki akses untuk melakukan registrasi\nsilahkan login sebagai admin")
+        print("Anda tidak memiliki akses untuk melakukan registrasi\nSilahkan login sebagai admin")
 
 
 def login(userListCsv):

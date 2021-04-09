@@ -5,6 +5,7 @@ from modules import csvParser
 from modules import randomizer
 from modules import access
 from modules import cari
+from modules import edit
 
 # File dan struktur data 
 # Bentuk string, bisa langsung di parse dengan csvParser
@@ -58,6 +59,20 @@ if __name__=="__main__":
             tahun=input("Masukkan tahun: ")
             kategori=input("Masukkan kategori: ")
             cari.caritahun(tahun, kategori, listgadgets)
+
+        elif command.lower() == "tambahitem":
+            if userRole=="admin":
+                itemID=input("Masukan ID               : ")
+                if itemID[0]=="G":
+                    listgadgets=csvParser.openParse(gadgets)
+                    edit.tambahgadget(itemID, listgadgets, gadgets)
+                elif itemID[0]=="C":
+                    listconsum=csvParser.openParse(consumables)
+                    edit.tambahconsum(itemID, listconsum,consumables)
+                else:
+                    print("Gagal menambahkan item karena ID tidak valid.")
+            else:
+                print("Anda tidak memiliki akses untuk menambah item\nSilakan login sebagai admin")
 
         else:
             print("command tidak dikenali, coba lagi")
