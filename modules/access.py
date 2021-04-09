@@ -41,12 +41,13 @@ def login(userListCsv):
     while not found:
         username = input("Masukkan username: ").strip()
         password = input("Masukkan password: ")
-        for i in openParse(userListCsv)[1:]:
+        for i in openParse(userListCsv):
             if i[1] == username and i[4] == password:
                 print("Login sukses, selamat datang %s\n" %username)
                 found = True 
                 status = i[5]
-                return username, status
+                IDnum = i[0]
+                return username, status, IDnum
                 break 
 
         else:  # Jika tidak ditemukan username & password yang benar

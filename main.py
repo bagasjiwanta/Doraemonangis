@@ -6,13 +6,14 @@ from modules import randomizer
 from modules import access
 from modules import cari
 from modules import edit
+from modules import trx
 
 # File dan struktur data 
 # Bentuk string, bisa langsung di parse dengan csvParser
 userFiles = os.path.join(sys.path[0], 'src/user.csv')
 gadgets = os.path.join(sys.path[0], 'src/gadget.csv')
 gadgetBorHis = os.path.join(sys.path[0], 'src/gadget_borrow_history.csv')
-gadgetRetHis = os.path.join(sys.path[0], 'src/gadget_borrow_history.csv')
+gadgetRetHis = os.path.join(sys.path[0], 'src/gadget_return_history.csv')
 consumables = os.path.join(sys.path[0], 'src/consumable.csv')
 consumablesHis = os.path.join(sys.path[0], 'src/consumable_history.csv')
 # end of Files & Data Structure 
@@ -20,6 +21,7 @@ consumablesHis = os.path.join(sys.path[0], 'src/consumable_history.csv')
 #parsing csv to list
 listgadgets = csvParser.openParse(gadgets)
 listconsum = csvParser.openParse(consumables)
+histpinjam = csvParser.openParse(gadgetBorHis)
 
 # GUI section 
 # end of GUI section 
@@ -32,11 +34,11 @@ if __name__=="__main__":
 
     # ini harusnya masuk ke GUI sih tpi tolong dong dibikinin nanti GUI nya 
     # gw nggak ngide mau gimana :( 
-    sleep(1)
+    sleep(0)
     print("\n---------------------\nSelamat datang di kantong ajaib\n"
     "---------------------\nMasukkan command")
     command = '' 
-    sleep(1)
+    sleep(0)
     # 
 
     while True:
@@ -50,8 +52,8 @@ if __name__=="__main__":
             access.register(userFiles, userRole)
 
         elif command.lower().strip() == "login":
-            userID, userRole = access.login(userFiles)
-        
+            userID, userRole, IDnum = access.login(userFiles)
+            
         elif command.lower().strip() =="carirarity":
             rarity=input("Masukkan rarity: ")
             cari.carirarity(rarity,listgadgets)
@@ -96,7 +98,15 @@ if __name__=="__main__":
                     print("Tidak ada item dengan id Tersebut")
             else:
                 print("\nAnda tidak memiliki akses untuk menambah item\nSilakan login sebagai admin")
-
+        
+        elif command.lower().strip() == "pinjam":
+            histpinjam = csvParser.openParse(gadgetBorHis)
+            if userRole == "user":
+                itemID=input("Masukkan ID item: ").strip() 
+                trx.pinjam(IDnum, itemID, listgadgets, gadgets, histpinjam, gadgetBorHis)
+            else:
+                print("Silakan login sebagai user")
+        
         else:
             print("command tidak dikenali, coba lagi")
     
