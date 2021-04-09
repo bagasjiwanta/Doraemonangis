@@ -6,6 +6,7 @@ from modules import randomizer
 from modules import access
 from modules import cari
 from modules import edit
+from modules import hapus 
 
 # File dan struktur data 
 # Bentuk string, bisa langsung di parse dengan csvParser
@@ -39,30 +40,30 @@ if __name__=="__main__":
         command = input("[%s:%s] > "%(userRole, userID))
         
         # list command dibawah sini
-        if command.lower() == "exit":
+        if command.lower().strip() == "exit":
             exit
             break 
 
-        elif command.lower() == "register":
+        elif command.lower().strip() == "register":
             access.register(userFiles, userRole)
 
-        elif command.lower() == "login":
+        elif command.lower().strip() == "login":
             userID, userRole = access.login(userFiles)
         
-        elif command.lower() =="carirarity":
+        elif command.lower().strip() =="carirarity":
             listgadgets=csvParser.openParse(gadgets)
             rarity=input("Masukkan rarity: ")
             cari.carirarity(rarity,listgadgets)
 
-        elif command.lower() == "caritahun":
+        elif command.lower().strip() == "caritahun":
             listgadgets=csvParser.openParse(gadgets)
             tahun=input("Masukkan tahun: ")
             kategori=input("Masukkan kategori: ")
             cari.caritahun(tahun, kategori, listgadgets)
 
-        elif command.lower() == "tambahitem":
+        elif command.lower().strip() == "tambahitem":
             if userRole=="admin":
-                itemID=input("Masukan ID               : ")
+                itemID=input("Masukan ID               : ").strip()
                 if itemID[0]=="G":
                     listgadgets=csvParser.openParse(gadgets)
                     edit.tambahgadget(itemID, listgadgets, gadgets)
@@ -70,10 +71,23 @@ if __name__=="__main__":
                     listconsum=csvParser.openParse(consumables)
                     edit.tambahconsum(itemID, listconsum,consumables)
                 else:
-                    print("Gagal menambahkan item karena ID tidak valid.")
+                    print("\nGagal menambahkan item karena ID tidak valid.")
             else:
-                print("Anda tidak memiliki akses untuk menambah item\nSilakan login sebagai admin")
-
+                print("\nAnda tidak memiliki akses untuk menambah item\nSilakan login sebagai admin")
+        
+        elif command.lower().strip() == "hapusitem":
+            if userRole == "admin":
+                itemID=input("Masukkan ID             : ").strip() 
+                if itemID[0].strip() =="G":
+                    listgadgets = csvParser.openParse(gadgets)
+                    hapus.hapusgadget(itemID, listgadgets, gadgets)
+                elif itemID[0].strip() == "C":
+                    listconsum = csvParser.openParse(consumables)
+                    hapus.hapusconsum(itemID, listconsum, consumables)
+                else:
+                    print("Tidak ada item dengan id Tersebut")
+            else:
+                print("\nAnda tidak memiliki akses untuk menambah item\nSilakan login sebagai admin")
         else:
             print("command tidak dikenali, coba lagi")
     

@@ -37,10 +37,18 @@ def openParse(inputCsv):  # input string (path ke file csv)
         outputCsv[i] = splitLine(csvData[i])
     return outputCsv
         
+def combineParse(inputmatrix): #inputdata = matrix
+    output = ''
+    i = 0
+    while i < len(inputmatrix) - 1:
+        output += ";".join(inputmatrix[i]) + "\n"
+        i += 1 
+    output += ";".join(inputmatrix[i])
+    return output 
         
 def writeParse(inputData, csvToWrite): #inputData=matrix, csvToWrite=string(path ke file)
     # menulis ulang seluruh isi file csv 
-    csvData = open(inputData, 'w')
+    csvData = open(csvToWrite, 'w')
     csvData.writelines(inputData)
     csvData.close()
 
