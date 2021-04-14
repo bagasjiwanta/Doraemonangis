@@ -54,12 +54,19 @@ def tambahconsum(itemID, listconsum, consumListCsv):
             else:
                 print("Input rarity tidak valid!")
 
-def hapus(itemID, itemList, itemListCsv):
+def hapus(itemID, itemList, itemListCsv, inventory):
+    inventories = openParse(inventory)
+    for i in inventories:
+        if i[0] == itemID:
+            inventories.pop(i)
+            break
+    writeParse(inventories, inventory)
+
     index = 0
     for i in itemList:
         if i[0] == itemID:
             caution = input("Apakah anda yakin ingin menghapus %s (Y/N)? "%(i[1]))
-            if caution.lower() == 'y':
+            if caution.strip().lower() == 'y':
                 itemList.remove(i)
                 writeParse(combineParse(itemList), itemListCsv)
                 print("Item tersebut telah berhasil dihapus dari database")

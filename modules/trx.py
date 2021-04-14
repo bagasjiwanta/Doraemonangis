@@ -1,19 +1,39 @@
 from .csvParser import openParse, appendParse, writeParse, combineParse
 
-def pinjam(IDnum, itemID, itemList, itemListCsv, listpinjam, gadgetBorHisCsv):
+def pinjam(IDnum, itemID, itemList, itemListCsv, listpinjam, history, inventories):
     notFound=True
     for i in range (len(itemList)):
         if itemList[i][0] == itemID:
             notFound=False
-            tanggal=input("Tanggal peminjaman: ")
-            jumlah=int(input("Jumlah peminjaman: "))
+            if itemID[0] == "C":
+                tanggal=input("Tanggal permintaan: ")
+                jumlah=int(input("Jumlah permintaan: "))
+                key = "minta"
+
+            elif itemID[0] == "G":
+                tanggal=input("Tanggal peminjaman: ")
+                jumlah=int(input("Jumlah peminjaman: "))
+                key = "pinjam"
+
             if jumlah<=int(itemList[i][3]):
-                itemList[i][3]=str(int(itemList[i][3])-jumlah)
-                print("Item %s (x%d) berhasil dipinjam!"%(itemList[i][1],jumlah))
+                itemList[i][3] = str(int(itemList[i][3]) - jumlah)
+                print("Item %s (x%d) berhasil di%s!"%(itemList[i][1], jumlah, key))
                 writeParse(combineParse(itemList), itemListCsv)
                 IDpinjam=str(len(listpinjam))
                 newpinjam = ';'.join([IDpinjam, IDnum, itemID, tanggal, str(jumlah)])
-                appendParse(newpinjam, gadgetBorHisCsv)
+                appendParse(newpinjam, history)
+                
+                if itemID[0] == 'G':
+                    inventory = openParse(inventories)
+                    for j in inventory:
+                        if j[0] == itemID:
+                            j[2] = str(int(j[2]) + jumlah) 
+                            inventory = combineParse(inventory)
+                            writeParse(inventory, inventories)
+                            break
+
+                    else: 
+                        appendParse(';'.join([itemID, itemList[i][1],str(jumlah)]), inventories)
             else:
                 print("Stok gadget kurang")
     if notFound:
@@ -57,6 +77,54 @@ def history(jenis,listuser, itemList, listtrx):
         print()
 
 
+def kembalikan(userID, inventories, GadgetCsv, GadgetRetCsv):
+    inventory = openParse(inventories)
+    gadget = openParse(GadgetCsv)
+    histReturn = openParse(GadgetRetCsv)
+    index = 0
 
+    print("\n--Inventory--")
+    for i in range(1, len(inventory)):
+        print("ID = %s \t%s (x%s)" %(inventory[i][0], inventory[i][1], inventory[i][2]))
+    print("")
+    no = input("Masukkan id gadget : ")
+
+    for i in range(len(inventory)):
+        if inventory[i][0] == no:
+            index = i
+            break
+    else:
+        print("Tidak ditemukan item dengan ide %s" %no)
+        return 1
     
-    
+    tgl = input("Masukkan tanggal pengembalian : ")
+    try:
+        jml = int(input("Masukkan jumlah pengembalian: "))
+    except ValueError:
+        print("Jumlah invalid")
+        return 1
+
+    if jml < 0:
+        print("Jumlah yang anda masukkan invalid")
+        
+    elif jml > int(inventory[index][2]):
+        print("Jumlah yang anda masukkan lebih besar dari jumlah yang anda miliki")
+        
+    else:
+        if jml == int(inventory[index][2]):
+            inventory.pop(index)
+           
+        else:
+            inventory[index][2] = str(int(inventory[index][2])-jml)
+        print("Pengembalian sukses!")
+        for i in gadget:
+            if i[0] == no:
+                i[3] = str(int(i[3]) + jml)
+                break
+        
+        output = combineParse(gadget)
+        writeParse(output, GadgetCsv)
+        output = combineParse(inventory)
+        writeParse(output, inventories)
+        newhistory = ';'.join([str(len(histReturn)), userID, no, tgl, str(jml)])
+        appendParse(newhistory, GadgetRetCsv)

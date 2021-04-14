@@ -31,9 +31,11 @@ def register(userListCsv, acc):
         newUser = ';'.join([userId, username, nama, alamat, password, "user"])
         appendParse(newUser, userListCsv)
         print("User baru telah ditambahkan")
+        return username
         
     else:
         print("Anda tidak memiliki akses untuk melakukan registrasi\nSilahkan login sebagai admin")
+        return ''
 
 
 def login(userListCsv):
@@ -57,7 +59,19 @@ def login(userListCsv):
                 command = input("> ")
                 if command.lower() == 'n':
                     found = True 
-                    return '','' 
+                    return '','','' 
                 elif command.lower() != 'y':
                     print("command tidak dikenali, ulangi login? [y/n]")               
 
+def save():
+    
+    while True:
+        folderName = input("Masukkan nama folder untuk save: ").lower().strip()
+        for i in folderName:
+            if not i.isalnum():
+                print("input folder tidak valid")
+                break
+        else:
+            break
+    
+    
