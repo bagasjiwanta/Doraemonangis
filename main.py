@@ -10,12 +10,10 @@ from modules import edit
 from modules import trx
 from modules import buatfolder
 
-
-
 # id user dan role user (yang menggunakan sekarang)
 userID = ''
 userRole = ''
-inventory = ''
+
 
 if __name__=="__main__":
     commandParser = argparse.ArgumentParser(
@@ -41,7 +39,7 @@ if __name__=="__main__":
     gadgetRetHis = os.path.join(sys.path[0], 'savefiles/%s/gadget_return_history.csv'%workname)
     consumables = os.path.join(sys.path[0], 'savefiles/%s/consumable.csv'%workname)
     consumablesHis = os.path.join(sys.path[0], 'savefiles/%s/consumable_history.csv' %workname)
-
+    inventory = os.path.join(sys.path[0], 'savefiles/%s/inventory.csv' %workname)
 
     print("\n---------------------\nSelamat datang di kantong ajaib\n"
     "---------------------\nMasukkan command")
@@ -56,146 +54,43 @@ if __name__=="__main__":
 
         elif command.lower().strip() == "register":
             temp = access.register(userFiles, userRole)
-            if temp != '':
-                new = open(os.path.join(sys.path[0], '%s/inventory/%s.csv' %(workdir,temp)), 'w')
-                new.write("id_gadget;nama_gadget;jumlah")
-                new.close()
-            
-
+        
         elif command.lower().strip() == "login":
             userID, userRole, IDnum = access.login(userFiles)
-            
-            if userRole != "admin":
-                if '.'.join([userID, 'csv']) in os.listdir(os.path.join(sys.path[0], 'src/')):
-                    inventory = os.path.join(sys.path[0], '%s/inventory/%s.csv' %(workdir,userID))
-                else:
-                    print("Data inventory untuk user ini tidak tersedia (hilang), ingin membuat inventory baru? [y/n]")
-                    confirm = input().strip().lower()
-                    if confirm == 'y':         
-                        new = open(os.path.join(sys.path[0], '%s/inventory/%s.csv' %userID), 'w')
-                        new.write("id_gadget;nama_gadget;jumlah")
-                        new.close()
-                    print("Berhasil membuat inventory untuk user %s" %userID)
-
 
         elif command.lower().strip() =="carirarity":
-            listgadgets = csvParser.openParse(gadgets)
-            listconsum = csvParser.openParse(consumables)
-            rarity=input("Masukkan rarity: ")
-            cari.carirarity(rarity,listgadgets)
+            cari.cari("rarity",gadgets)
 
         elif command.lower().strip() == "caritahun":
-            listgadgets = csvParser.openParse(gadgets)
-            listgadgets = listgadgets[1:]
-            tahun=input("Masukkan tahun: ")
-            kategori=input("Masukkan kategori: ")
-            cari.caritahun(tahun, kategori, listgadgets)
+            cari.cari("tahun",gadgets)
 
         elif command.lower().strip() == "tambahitem":
-            listgadgets = csvParser.openParse(gadgets)
-            listconsum = csvParser.openParse(consumables)
-            if userRole=="admin":
-                itemID=input("Masukan ID: ").strip()
-                if itemID[0]=="G":
-                    edit.tambahgadget(itemID, listgadgets, gadgets)
-                elif itemID[0]=="C":
-                    edit.tambahconsum(itemID, listconsum,consumables)
-                else:
-                    print("\nGagal menambahkan item karena ID tidak valid.")
-            else:
-                print("\nAnda tidak memiliki akses untuk menambah item\nSilakan login sebagai admin")
+            edit.tambah(userRole,consumables,gadgets)
         
         elif command.lower().strip() == "hapusitem":
-            listgadgets = csvParser.openParse(gadgets)
-            listconsum = csvParser.openParse(consumables)
-            if userRole == "admin":
-                itemID=input("Masukkan ID: ").strip() 
-                if itemID[0].strip() =="G":
-                    edit.hapus(itemID, listgadgets, gadgets)
-                elif itemID[0].strip() == "C":
-                    edit.hapus(itemID, listconsum, consumables)
-                else:
-                    print("Tidak ada item dengan id Tersebut")
-            else:
-                print("\nAnda tidak memiliki akses untuk menambah item\nSilakan login sebagai admin")
-
+            edit.hapus(userRole, consumables, gadgets, inventory)
+        
         elif command.lower().strip() == "ubahjumlah":
-            listgadgets = csvParser.openParse(gadgets)
-            listconsum = csvParser.openParse(consumables)
-            if userRole == "admin":
-                itemID=input("Masukkan ID: ").strip() 
-                if itemID[0].strip() =="G":
-                    edit.jumlah(itemID, listgadgets, gadgets)
-                elif itemID[0].strip() == "C":
-                    edit.jumlah(itemID, listconsum, consumables)
-                else:
-                    print("Tidak ada item dengan id Tersebut")
-            else:
-                print("\nAnda tidak memiliki akses untuk menambah item\nSilakan login sebagai admin")
+            edit.jumlah(userRole,consumables,gadgets)
         
         elif command.lower().strip() == "pinjam":
-            listgadgets = csvParser.openParse(gadgets)
-            histpinjam = csvParser.openParse(gadgetBorHis)
-            if userRole == "user":
-                itemID=input("Masukkan ID item: ").strip() 
-                trx.pinjam(IDnum, itemID, listgadgets, gadgets, histpinjam, gadgetBorHis, inventory)
-            else:
-                print("Silakan login sebagai user")
-
-        elif command.lower().strip() == "minta":
-            listconsum = csvParser.openParse(consumables)
-            histconsum = csvParser.openParse(consumablesHis)
-            if userRole == "user":
-                itemID=input("Masukkan ID item: ").strip() 
-                trx.pinjam(IDnum, itemID, listconsum, consumables, histconsum, consumablesHis, inventory)
-            else:
-                print("Silakan login sebagai user")
-
-        elif command.lower().strip() == "riwayatpinjam":
-            listgadgets = csvParser.openParse(gadgets)
-            histpinjam = csvParser.openParse(gadgetBorHis)
-            listuser = csvParser.openParse(userFiles)
-            listgadgets=listgadgets[1:]
-            histpinjam=histpinjam[1:]
-            listuser=listuser[1:]
-            jenis="pinjam"
-            
-            if userRole == "admin":
-                trx.history(jenis,listuser,listgadgets, histpinjam)
-            else:
-                print("Silakan login sebagai admin")
-
-        elif command.lower().strip() == "riwayatkembali":
-            listgadgets = csvParser.openParse(gadgets)
-            listuser = csvParser.openParse(userFiles)
-            listkembali = csvParser.openParse(gadgetRetHis)
-            listgadgets=listgadgets[1:]
-            listkembali=listkembali[1:]
-            listuser=listuser[1:]
-            jenis="kembali"
-            if userRole == "admin":
-                trx.history(jenis,listuser,listgadgets, listkembali)
-            else:
-                print("Silakan login sebagai admin")
-
-        elif command.lower().strip() == "riwayatambil":
-            listconsum = csvParser.openParse(consumables)
-            listuser = csvParser.openParse(userFiles)
-            listambil = csvParser.openParse(consumablesHis)
-            listconsum=listconsum[1:]
-            listambil=listambil[1:]
-            listuser=listuser[1:]
-            jenis="ambil"
-            if userRole == "admin":
-                trx.history(jenis,listuser,listgadgets, listkembali)
-            else:
-                print("Silakan login sebagai admin")
+            trx.pinjamambil(userRole, IDnum ,"gadget",gadgets,gadgetBorHis,inventory)
 
         elif command.strip().lower() == "kembalikan":
-            trx.kembalikan(IDnum, inventory, gadgets, gadgetRetHis)
+            trx.kembali(userRole, IDnum, inventory, gadgets, gadgetRetHis)
+
+        elif command.lower().strip() == "minta":
+            trx.pinjamambil(userRole, IDnum,"consumable",consumables,consumablesHis,inventory)
+
+        elif command.lower().strip() == "riwayatpinjam":
+            trx.history(userRole, "pinjam", userFiles, gadgets, consumables, gadgetRetHis, gadgetBorHis, consumablesHis)
+
+        elif command.lower().strip() == "riwayatkembali":
+            trx.history(userRole, "kembali", userFiles, gadgets, consumables, gadgetRetHis, gadgetBorHis, consumablesHis)
+
+        elif command.lower().strip() == "riwayatambil":
+            trx.history(userRole, "ambil", userFiles, gadgets, consumables, gadgetRetHis, gadgetBorHis, consumablesHis)
         
         # elif command.strip().lower() == "save":
-
-
         else:
             print("command tidak dikenali, coba lagi")
