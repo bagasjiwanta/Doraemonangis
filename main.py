@@ -1,68 +1,52 @@
-import os 
-import sys
-import argparse 
-from time import sleep 
-from modules import csvParser
-from modules import randomizer
+# important libraries
+from os import path as ospath 
+from sys import path as syspath
+from sys import exit as keluar
 from modules import access
-from modules import cari
 from modules import edit
 from modules import trx
-from modules import buatfolder
+from modules import parser
+from modules import folder 
 
-# id user dan role user (yang menggunakan sekarang)
-userID = ''
+# username, userrole, dan userid yang menggunakan sekarang
+userName = ''
 userRole = ''
+userID = ''
 
+# File dan struktur data 
+BASE_DIR = syspath[0]
+userFiles = ospath.join(BASE_DIR, 'savefiles\\temp\\user.csv')
+gadgets = ospath.join(BASE_DIR, 'savefiles\\temp\\gadget.csv')
+gadgetBorHis = ospath.join(BASE_DIR, 'savefiles\\temp\\gadget_borrow_history.csv')
+gadgetRetHis = ospath.join(BASE_DIR, 'savefiles\\temp\\gadget_return_history.csv')
+consumables = ospath.join(BASE_DIR, 'savefiles\\temp\\consumable.csv')
+consumablesHis = ospath.join(BASE_DIR, 'savefiles\\temp\\consumable_history.csv' )
+inventory = ospath.join(BASE_DIR, 'savefiles\\temp\\inventory.csv')
 
 if __name__=="__main__":
-    commandParser = argparse.ArgumentParser(
-    description="Kantong ajaib",
-    usage="python kantongajaib.py nama_folder"
-    )
-    commandParser.add_argument("folder")
-    commandParser = commandParser.parse_args()
-    workdir = commandParser.folder.strip()
-    workdir = buatfolder.saveFolderValidator(workdir, os.path.join(sys.path[0], 'savefiles/'))
-    if workdir == '*':
-        exit()
-    else:
-        buatfolder.copyFolder(os.path.join(sys.path[0], 'savefiles/%s/'%workdir), os.path.join(sys.path[0], 'savefiles/temp'))
-
-    workdir = os.path.join(sys.path[0], 'savefiles/temp')
-    workname = 'temp'
-    # File dan struktur data 
-    # Bentuk string, bisa langsung di parse dengan csvParser
-    userFiles = os.path.join(sys.path[0], 'savefiles/%s/user.csv'%workname)
-    gadgets = os.path.join(sys.path[0], 'savefiles/%s/gadget.csv'%workname)
-    gadgetBorHis = os.path.join(sys.path[0], 'savefiles/%s/gadget_borrow_history.csv'%workname)
-    gadgetRetHis = os.path.join(sys.path[0], 'savefiles/%s/gadget_return_history.csv'%workname)
-    consumables = os.path.join(sys.path[0], 'savefiles/%s/consumable.csv'%workname)
-    consumablesHis = os.path.join(sys.path[0], 'savefiles/%s/consumable_history.csv' %workname)
-    inventory = os.path.join(sys.path[0], 'savefiles/%s/inventory.csv' %workname)
+    parser.inputCli(BASE_DIR)
 
     print("\n---------------------\nSelamat datang di kantong ajaib\n"
     "---------------------\nMasukkan command")
-    command = '' 
-
+    
     while True:
-        command = input("[%s:%s] > "%(userRole, userID))
+        command = input("[%s:%s] > "%(userRole, userName))
+
         # list command dibawah sini
         if command.lower().strip() == "exit":
-            exit()
-            break 
+            folder.exits(BASE_DIR)
 
         elif command.lower().strip() == "register":
             temp = access.register(userFiles, userRole)
         
         elif command.lower().strip() == "login":
-            userID, userRole, IDnum = access.login(userFiles)
+            userName, userRole, userID = access.login(userFiles, userID, userName, userRole)
 
         elif command.lower().strip() =="carirarity":
-            cari.cari("rarity",gadgets)
+            trx.cari("rarity",gadgets)
 
         elif command.lower().strip() == "caritahun":
-            cari.cari("tahun",gadgets)
+            trx.cari("tahun",gadgets)
 
         elif command.lower().strip() == "tambahitem":
             edit.tambah(userRole,consumables,gadgets)
@@ -74,13 +58,13 @@ if __name__=="__main__":
             edit.jumlah(userRole,consumables,gadgets)
         
         elif command.lower().strip() == "pinjam":
-            trx.pinjamambil(userRole, IDnum ,"gadget",gadgets,gadgetBorHis,inventory)
+            trx.pinjamambil(userRole, userID ,"gadget",gadgets,gadgetBorHis,inventory)
 
         elif command.strip().lower() == "kembalikan":
-            trx.kembali(userRole, IDnum, inventory, gadgets, gadgetRetHis)
+            trx.kembali(userRole, userID, inventory, gadgets, gadgetRetHis)
 
         elif command.lower().strip() == "minta":
-            trx.pinjamambil(userRole, IDnum,"consumable",consumables,consumablesHis,inventory)
+            trx.pinjamambil(userRole, userID,"consumable",consumables,consumablesHis,inventory)
 
         elif command.lower().strip() == "riwayatpinjam":
             trx.history(userRole, "pinjam", userFiles, gadgets, consumables, gadgetRetHis, gadgetBorHis, consumablesHis)
@@ -91,6 +75,7 @@ if __name__=="__main__":
         elif command.lower().strip() == "riwayatambil":
             trx.history(userRole, "ambil", userFiles, gadgets, consumables, gadgetRetHis, gadgetBorHis, consumablesHis)
         
-        # elif command.strip().lower() == "save":
+        elif command.strip().lower() == "save":
+            folder.save(BASE_DIR)
         else:
             print("command tidak dikenali, coba lagi")

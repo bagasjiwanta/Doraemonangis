@@ -1,23 +1,24 @@
-from modules import csvParser
-from .csvParser import openParse, appendParse, writeParse, combineParse
+from modules import parser
+from modules import others
+from .parser import openParse, appendParse, writeParse, combineParse
 
 def pinjamambil(userRole, IDnum, jenis, itemListCsv, itemHisCsv, inventoryCsv):
-    itemList = csvParser.openParse(itemListCsv)
-    listinventory = csvParser.openParse(inventoryCsv)
-    listpinjam = csvParser.openParse(itemHisCsv)
+    itemList = parser.openParse(itemListCsv)
+    listinventory = parser.openParse(inventoryCsv)
+    listpinjam = parser.openParse(itemHisCsv)
     if userRole == "user":
         itemID=input("Masukkan ID item: ").strip() 
         notFound=True #asumsi item tidak ditemukan
         for i in range (len(itemList)):
             if itemList[i][0] == itemID: #item ditemukan
                 notFound=False
-                if itemID[0] == "C": #validasi prefiks item
-                    tanggal=input("Tanggal permintaan: ")
+                if itemID[0] == "C" and itemID[1:].isnumeric(): #validasi prefiks item
+                    tanggal=input("Tanggal permintaan: (DD/MM/YYYY) ")
                     jumlah=int(input("Jumlah permintaan: "))
                     key = "minta"
 
-                elif itemID[0] == "G": #validasi prefiks item
-                    tanggal=input("Tanggal peminjaman: ")
+                elif itemID[0] == "G" and itemID[1:].isnumeric(): #validasi prefiks item
+                    tanggal=input("Tanggal peminjaman: (DD/MM/YYYY) ")
                     jumlah=int(input("Jumlah peminjaman: "))
                     key = "pinjam"
 
@@ -50,9 +51,10 @@ def pinjamambil(userRole, IDnum, jenis, itemListCsv, itemHisCsv, inventoryCsv):
         print("Silakan login sebagai user")
 
 def kembali(userRole, IDnum, itemListCsv, inventoryCsv, gadgetRetHisCsv):
-    itemList = csvParser.openParse(itemListCsv)
-    listinventory = csvParser.openParse(inventoryCsv)
-    listkembali= csvParser.openParse(gadgetRetHisCsv)
+    itemList = parser.openParse(itemListCsv)
+    listinventory = parser.openParse(inventoryCsv)
+    listkembali= parser.openParse(gadgetRetHisCsv)
+
     if userRole == "user":
         count=0 #penghitung urutan inventory
         urutan=["" for i in range (len(itemList))]
@@ -62,7 +64,8 @@ def kembali(userRole, IDnum, itemListCsv, inventoryCsv, gadgetRetHisCsv):
                 count+=1
                 print(f"{count}. {listinventory[i][2]} (x{listinventory[1][3]})")
         nomorpinjam=int(input("Masukan nomor peminjaman: "))
-        tanggalkembali=input("Tanggal pengembalian: ")
+        tanggalkembali=input("Tanggal pengembalian: (DD/MM/YYYY)")
+        others.validasiTanggal(tanggalkembali)
         jumlahkembali=int(input("Masukan jumlah pengembalian: "))
 
         for i in range (len(listinventory)): #pengubahan jumlah inventory
@@ -86,24 +89,24 @@ def kembali(userRole, IDnum, itemListCsv, inventoryCsv, gadgetRetHisCsv):
 
 def history(userRole, jenis, userCsv, gadgets, consumables, gadgetRetHisCsv, gadgetBorHis, consumablesHis ):
     if userRole == "admin":
-        listuser=csvParser.openParse(userCsv)
+        listuser=parser.openParse(userCsv)
         listuser=listuser[1:]
         #menyocokkan dengan jenis riwayat 
         if jenis == "pinjam":
-            itemList=csvParser.openParse(gadgets)
-            listhistory=csvParser.openParse(gadgetBorHis)
+            itemList=parser.openParse(gadgets)
+            listhistory=parser.openParse(gadgetBorHis)
             phrase1="Peminjaman"
             phrase2="Peminjam"
             phrase3="Gadget"
         elif jenis == "kembali":
-            itemList=csvParser.openParse(gadgets)
-            listhistory=csvParser.openParse(gadgetRetHisCsv)
+            itemList=parser.openParse(gadgets)
+            listhistory=parser.openParse(gadgetRetHisCsv)
             phrase1="Pengembalian"
             phrase2="Pengembali"
             phrase3="Gadget"
         elif jenis == "ambil":
-            itemList=csvParser.openParse(consumables)
-            listhistory=csvParser.openParse(consumablesHis)
+            itemList=parser.openParse(consumables)
+            listhistory=parser.openParse(consumablesHis)
             phrase1="Pengambilan"
             phrase2="Pengambil"
             phrase3="Consumable"
@@ -142,3 +145,28 @@ def history(userRole, jenis, userCsv, gadgets, consumables, gadgetRetHisCsv, gad
 
     else:
         print("Silakan login sebagai admin")       
+
+def cari(jenis,gadgets):
+    listgadgets = parser.openParse(gadgets)[1:] #parsing file gadget.csv menjadi list
+    if jenis=="rarity":
+        rarity=input("Masukkan rarity: ")
+        print("\nHasil pencarian:\n")
+        for i in range (len(listgadgets)):
+            if listgadgets[i][4]==rarity:
+                print(f"Nama             : {listgadgets[i][1]}")
+                print(f"Deskripsi        : {listgadgets[i][2]}")
+                print(f"Jumlah           : {listgadgets[i][3]} buah")
+                print(f"Rarity           : {listgadgets[i][4]}")
+                print(f"Tahun Ditemukan  : {listgadgets[i][5]}\n")
+    if jenis=="tahun":
+        tahun=input("Masukkan tahun: ")
+        kategori=input("Masukkan kategori: ")
+        print("\nHasil pencarian:\n")
+        for i in range (len(listgadgets)):
+            if (kategori=="=" and listgadgets[i][5]==tahun) or (kategori==">" and listgadgets[i][5]>tahun) or (kategori=="<" and listgadgets[i][5]<tahun) or (kategori==">=" and listgadgets[i][5]>=tahun) or (kategori=="<=" and listgadgets[i][5]<=tahun):
+                print(f"Nama             : {listgadgets[i][1]}")
+                print(f"Deskripsi        : {listgadgets[i][2]}")
+                print(f"Jumlah           : {listgadgets[i][3]} buah")
+                print(f"Rarity           : {listgadgets[i][4]}")
+                print(f"Tahun Ditemukan  : {listgadgets[i][5]}\n")
+            

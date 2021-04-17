@@ -1,9 +1,11 @@
-from modules import csvParser
-from .csvParser import openParse, appendParse, writeParse, combineParse
+# Modul ini digunakan untuk mengubah jumlah, hapus item, dan menambah item
+
+from modules import parser
+from .parser import openParse, appendParse, writeParse, combineParse
 
 def tambah(userRole,consumListCsv, gadgetListCsv):
-    listgadgets = csvParser.openParse(gadgetListCsv)
-    listconsum = csvParser.openParse(consumListCsv)
+    listgadgets = parser.openParse(gadgetListCsv)
+    listconsum = parser.openParse(consumListCsv)
     continueinput=True
     if userRole=="admin":
         itemID=input("Masukan ID: ").strip()  #id item divalidasi terlebih dahulu
@@ -56,14 +58,14 @@ def tambah(userRole,consumListCsv, gadgetListCsv):
         print("\nAnda tidak memiliki akses untuk menambah item\nSilakan login sebagai admin")
 
 def hapus(userRole, consumListCsv, gadgetListCsv, inventoryCsv):
-    listinventory=csvParser.openParse(inventoryCsv)
+    listinventory=parser.openParse(inventoryCsv)
     if userRole == "admin":
         itemID=input("Masukkan ID item: ")
         if itemID[0]=="G":
-            itemList=csvParser.openParse(gadgetListCsv)
+            itemList=parser.openParse(gadgetListCsv)
             itemListCsv=gadgetListCsv
         elif itemID[0]=="C":
-            itemList=csvParser.openParse(consumListCsv)
+            itemList=parser.openParse(consumListCsv)
             itemListCsv=consumListCsv
         for i in range (len(itemList)):
             if itemList[i][0] == itemID:
@@ -74,6 +76,7 @@ def hapus(userRole, consumListCsv, gadgetListCsv, inventoryCsv):
                     print("Item tersebut telah berhasil dihapus dari database")
                     #menghapus item dari inventory
                     for j in range(len(listinventory)):
+                        print(listinventory[j])
                         if listinventory[j][1]==itemID:
                             listinventory.pop(j) #menghapus item dari database inventory
                             writeParse(combineParse(listinventory), inventoryCsv)
@@ -86,8 +89,8 @@ def hapus(userRole, consumListCsv, gadgetListCsv, inventoryCsv):
         print("\nAnda tidak memiliki akses untuk menghapus item\nSilakan login sebagai admin")
 
 def jumlah(userRole,consumListCsv, gadgetListCsv):
-    listgadgets = csvParser.openParse(gadgetListCsv)
-    listconsum = csvParser.openParse(consumListCsv)
+    listgadgets = parser.openParse(gadgetListCsv)
+    listconsum = parser.openParse(consumListCsv)
     if userRole == "admin": #validasi role
         itemID=input("Masukkan ID: ").strip() 
         if itemID[0].strip() =="G":

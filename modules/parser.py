@@ -1,3 +1,8 @@
+from argparse import ArgumentParser
+import os.path as ospath
+from . import folder
+from sys import exit as keluar
+
 def splitLine(listToSplit): # input line yang mau displit jadi list
     # makan;minum;saya;kamu;2002 → ['makan','minum','saya','kamu','2002']
     a, b = 0, 0
@@ -36,7 +41,8 @@ def openParse(inputCsv):  # input string (path ke file csv)
     for i in range(csvDataLength):
         outputCsv[i] = splitLine(csvData[i])
     return outputCsv
-        
+
+
 def combineParse(inputmatrix): #inputdata = matrix
     output = ''
     i = 0
@@ -46,7 +52,8 @@ def combineParse(inputmatrix): #inputdata = matrix
     output += ";".join(inputmatrix[i])
     return output 
         
-def writeParse(inputData, csvToWrite): #inputData=matrix, csvToWrite=string(path ke file)
+
+def writeParse(inputData, csvToWrite): #inputData=string, csvToWrite=string(path ke file)
     # menulis ulang seluruh isi file csv 
     csvData = open(csvToWrite, 'w')
     csvData.writelines(inputData)
@@ -59,4 +66,25 @@ def appendParse(inputLine, csvToWrite): #inputLine=string(1 line), csvToWrite=st
     csvData.write("\n")
     csvData.write(inputLine)
     csvData.close()
+
+
+def inputCli(baseDir):
+    commandParser = ArgumentParser(
+    description="Kantong ajaib",
+    usage="python kantongajaib.py nama_folder")
     
+    commandParser.add_argument("folder")
+    commandParser = commandParser.parse_args()
+    workdir = commandParser.folder.strip()
+
+    workdir = folder.saveFolderValidator(workdir, ospath.join(baseDir, 'savefiles\\'))
+    if workdir == '*':
+        keluar()
+    elif ospath.exists('\\'.join([baseDir, 'savefiles\\temp'])):
+        print("Ditemukan autosave sebelumnya, sepertinya program tidak terminate dengan benar sebelumnya"
+        "\nApakah anda ingin menyimpan autosave sebelumnya ?[Y/N]")
+        choice = input()
+        if choice.strip().lower() == 'y':
+            folder.save(baseDir)
+    else:
+        folder.copyFolder(ospath.join(baseDir, 'savefiles\\%s\\'%workdir), ospath.join(baseDir, 'savefiles\\temp'))

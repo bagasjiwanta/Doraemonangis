@@ -1,5 +1,7 @@
-from .csvParser import openParse, appendParse
-from .randomizer import randomInt 
+# modul ini digunakan untuk melakukan login dan register
+
+from .parser import openParse, appendParse
+from .others import randomInt 
 
 def register(userListCsv, acc):
     print()
@@ -38,15 +40,15 @@ def register(userListCsv, acc):
         return ''
 
 
-def login(userListCsv):
-    found = False 
-    while not found:
+def login(userListCsv, oldId, oldUserName, oldRole):
+    found = True 
+    while found:
         username = input("Masukkan username: ").strip()
         password = input("Masukkan password: ")
         for i in openParse(userListCsv):
             if i[1] == username and i[4] == password:
                 print("Login sukses, selamat datang %s\n" %username)
-                found = True 
+                found = False
                 status = i[5]
                 IDnum = i[0]
                 return username, status, IDnum
@@ -58,20 +60,7 @@ def login(userListCsv):
             while command.lower() != 'y':
                 command = input("> ")
                 if command.lower() == 'n':
-                    found = True 
-                    return '','','' 
+                    found = False 
+                    return oldUserName, oldRole, oldId
                 elif command.lower() != 'y':
                     print("command tidak dikenali, ulangi login? [y/n]")               
-
-def save():
-    
-    while True:
-        folderName = input("Masukkan nama folder untuk save: ").lower().strip()
-        for i in folderName:
-            if not i.isalnum():
-                print("input folder tidak valid")
-                break
-        else:
-            break
-    
-    
