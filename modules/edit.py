@@ -27,14 +27,14 @@ def tambah(userRole,consumListCsv, gadgetListCsv):
             print("\nGagal menambahkan item karena ID tidak valid.")
 
         if continueinput:
-            nama=input("Masukan Nama             : ")
-            deskripsi=input("Masukan Deskripsi        : ")
-            jumlah=int(input("Masukan Jumlah           : "))
+            nama=input("Masukan Nama: ")
+            deskripsi=input("Masukan Deskripsi: ")
+            jumlah=int(input("Masukan Jumlah: "))
             if jumlah<0:
                 print("Input jumlah tidak valid!")
             else:
                 jumlah=str(jumlah)
-                rarity=input("Masukan Rarity           : ")
+                rarity=input("Masukan Rarity: ")
                 validRarity=["S","A","B","C"]
                 if rarity in validRarity:
                     #untuk consumable input hanya sampai rarity

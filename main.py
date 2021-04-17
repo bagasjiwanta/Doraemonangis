@@ -7,6 +7,7 @@ from modules import edit
 from modules import trx
 from modules import parser
 from modules import folder 
+from modules import others
 
 # username, userrole, dan userid yang menggunakan sekarang
 userName = ''
@@ -77,5 +78,9 @@ if __name__=="__main__":
         
         elif command.strip().lower() == "save":
             folder.save(BASE_DIR)
+
+        elif command.strip().lower() == "help":
+            others.helper(userRole)
+               
         else:
             print("command tidak dikenali, coba lagi")

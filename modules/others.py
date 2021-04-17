@@ -36,3 +36,34 @@ def validasiTanggal(tanggal):
         return listTanggal[0] in range(1, 28)
     else:
         return False
+
+def helper (userRole):
+    if userRole=="admin":
+        print("========== HELP =========")
+        print("register - untuk melakukan registrasi user baru")
+        print("login - untuk melakukan login ke dalam sistem")
+        print("tambahitem - untuk melakukan penambahan item")
+        print("carirarity - untuk melakukan pencarian gadget berdasarkan rarity")
+        print("caritahun - pencarian gadget berdasarkan tahun ditemukannya")
+        print("hapusitem - menghapus gadget atau consumable yang pernah disimpan")
+        print("ubahjumlah - menambah atau mengurangi gadget atau consumable yang pernah disimpan")
+        print("riwayatpinjam - melihat riwayat peminjaman gadget")
+        print("riwayatkembali - melihat riwayat pengembalian gadget")
+        print("riwayatambil - melihat riwayat pengembalian consumable")
+        print("save - menyimpan data ke dalam file setelah dilakukan perubahan")
+        print("exit - keluar dari aplikasi")
+        return ()
+    elif userRole=="user":
+        print("========= HELP ==========")
+        print("login - untuk melakukan login ke dalam sistem")
+        print("carirarity - untuk melakukan pencarian gadget berdasarkan rarity")
+        print("caritahun - pencarian gadget berdasarkan tahun ditemukannya")
+        print("pinjamgadget - meminjam gadget")
+        print("kembalikan - mengembalikan gadget")
+        print("minta - meminta consumable yang tersedia")
+        print("save - menyimpan data ke dalam file setelah dilakukan perubahan")
+        print("exit - keluar dari aplikasi")
+        return ()
+     else:
+         print("login - untuk melakukan login ke dalam sistem")
+         print("exit - keluar dari aplikasi")   
