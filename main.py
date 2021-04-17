@@ -61,25 +61,25 @@ if __name__=="__main__":
         elif command.lower().strip() == "pinjam":
             trx.pinjamambil(userRole, userID ,"gadget",gadgets,gadgetBorHis,inventory)
 
-        elif command.strip().lower() == "kembalikan":
-            trx.kembali(userRole, userID, inventory, gadgets, gadgetRetHis)
+        elif command.lower().strip() == "kembalikan":
+            trx.kembali(userRole, userID, gadgets, inventory, gadgetRetHis)
 
         elif command.lower().strip() == "minta":
             trx.pinjamambil(userRole, userID,"consumable",consumables,consumablesHis,inventory)
 
         elif command.lower().strip() == "riwayatpinjam":
-            trx.history(userRole, "pinjam", userFiles, gadgets, consumables, gadgetRetHis, gadgetBorHis, consumablesHis)
+            trx.history(userRole, "pinjam", userFiles, gadgets, gadgetBorHis)
 
         elif command.lower().strip() == "riwayatkembali":
-            trx.history(userRole, "kembali", userFiles, gadgets, consumables, gadgetRetHis, gadgetBorHis, consumablesHis)
+            trx.history(userRole, "kembali", userFiles, gadgets, gadgetRetHis)
 
         elif command.lower().strip() == "riwayatambil":
-            trx.history(userRole, "ambil", userFiles, gadgets, consumables, gadgetRetHis, gadgetBorHis, consumablesHis)
+            trx.history(userRole, "ambil", userFiles, consumables, consumablesHis)
         
-        elif command.strip().lower() == "save":
+        elif command.lower().strip() == "save":
             folder.save(BASE_DIR)
 
-        elif command.strip().lower() == "help":
+        elif command.lower().strip() == "help":
             others.helper(userRole)
                
         else:

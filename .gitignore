@@ -1,3 +1,4 @@
 logs.txt
 __pycache__/
 modules/__pycache__/
+*.csv

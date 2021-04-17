@@ -45,7 +45,7 @@ def tambah(userRole,consumListCsv, gadgetListCsv):
                     
                     #untuk gadget input akan dilanjutkan sampai tahun
                     if validGadgetID:
-                        tahun=int(input("Masukan tahun ditemukan  : "))
+                        tahun=int(input("Masukan tahun ditemukan: "))
                         if tahun<=0:
                             print("Input tahun tidak valid!")
                         else: #lulus semua syarat
@@ -76,7 +76,6 @@ def hapus(userRole, consumListCsv, gadgetListCsv, inventoryCsv):
                     print("Item tersebut telah berhasil dihapus dari database")
                     #menghapus item dari inventory
                     for j in range(len(listinventory)):
-                        print(listinventory[j])
                         if listinventory[j][1]==itemID:
                             listinventory.pop(j) #menghapus item dari database inventory
                             writeParse(combineParse(listinventory), inventoryCsv)

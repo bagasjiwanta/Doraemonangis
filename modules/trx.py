@@ -13,12 +13,12 @@ def pinjamambil(userRole, IDnum, jenis, itemListCsv, itemHisCsv, inventoryCsv):
             if itemList[i][0] == itemID: #item ditemukan
                 notFound=False
                 if itemID[0] == "C" and itemID[1:].isnumeric(): #validasi prefiks item
-                    tanggal=input("Tanggal permintaan: (DD/MM/YYYY) ")
+                    tanggal=input("Tanggal permintaan (DD/MM/YYYY): ")
                     jumlah=int(input("Jumlah permintaan: "))
                     key = "minta"
 
                 elif itemID[0] == "G" and itemID[1:].isnumeric(): #validasi prefiks item
-                    tanggal=input("Tanggal peminjaman: (DD/MM/YYYY) ")
+                    tanggal=input("Tanggal peminjaman (DD/MM/YYYY): ")
                     jumlah=int(input("Jumlah peminjaman: "))
                     key = "pinjam"
 
@@ -62,10 +62,9 @@ def kembali(userRole, IDnum, itemListCsv, inventoryCsv, gadgetRetHisCsv):
             if listinventory[i][0]==IDnum and listinventory[i][1][0]=="G" and listinventory[i][3]!="0":
                 urutan[count]=listinventory[i][2] #menyimpan data gadget yang dapat dikembalikan
                 count+=1
-                print(f"{count}. {listinventory[i][2]} (x{listinventory[1][3]})")
+                print(f"{count}. {listinventory[i][2]} (x{listinventory[i][3]})")
         nomorpinjam=int(input("Masukan nomor peminjaman: "))
-        tanggalkembali=input("Tanggal pengembalian: (DD/MM/YYYY)")
-        others.validasiTanggal(tanggalkembali)
+        tanggalkembali=input("Tanggal pengembalian (DD/MM/YYYY): ")
         jumlahkembali=int(input("Masukan jumlah pengembalian: "))
 
         for i in range (len(listinventory)): #pengubahan jumlah inventory
@@ -87,32 +86,31 @@ def kembali(userRole, IDnum, itemListCsv, inventoryCsv, gadgetRetHisCsv):
     else:
         print("Silakan login sebagai user")
 
-def history(userRole, jenis, userCsv, gadgets, consumables, gadgetRetHisCsv, gadgetBorHis, consumablesHis ):
+def history(userRole, jenis, userCsv, itemListCsv, itemHisCsv):
     if userRole == "admin":
         listuser=parser.openParse(userCsv)
+        itemList=parser.openParse(itemListCsv)
+        listhistory=parser.openParse(itemHisCsv)
+
+        #menghilangkan header pada matrix agar dapat dilakukan operasi sorting
+
         listuser=listuser[1:]
+        itemList=itemList[1:]
+        listhistory=listhistory[1:]
         #menyocokkan dengan jenis riwayat 
         if jenis == "pinjam":
-            itemList=parser.openParse(gadgets)
-            listhistory=parser.openParse(gadgetBorHis)
             phrase1="Peminjaman"
             phrase2="Peminjam"
             phrase3="Gadget"
         elif jenis == "kembali":
-            itemList=parser.openParse(gadgets)
-            listhistory=parser.openParse(gadgetRetHisCsv)
             phrase1="Pengembalian"
             phrase2="Pengembali"
             phrase3="Gadget"
         elif jenis == "ambil":
-            itemList=parser.openParse(consumables)
-            listhistory=parser.openParse(consumablesHis)
             phrase1="Pengambilan"
             phrase2="Pengambil"
             phrase3="Consumable"
 
-        itemList=itemList[1:]
-        listhistory=listhistory[1:]
         #sort tanggal
         sortedtanggal=[[0 for i in range (2)] for j in range (len(listhistory))]
         for i in range (len(listhistory)):
@@ -120,7 +118,7 @@ def history(userRole, jenis, userCsv, gadgets, consumables, gadgetRetHisCsv, gad
             sortedtanggal[i][1]=int(listhistory[i][0]) #menyimpan id peminjaman
         sortedtanggal.sort(reverse=True) #list telah disort descending berdasarkan tanggal
         banyakdata=len(sortedtanggal)
-        print(f"Menampilkan 5 riwayat {phrase1} terbaru\n")
+        print(f"\nMenampilkan 5 riwayat {phrase1} terbaru\n")
 
         for i in range (banyakdata):
             for j in range (len(listhistory)):

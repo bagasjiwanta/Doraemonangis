@@ -8,6 +8,7 @@ def randomInt(digit):
     rvalue = int(time.strftime("%S", time.localtime()))
     return ("%d" % (rvalue*randstr))[:digit]
 
+
 def validasiTanggal(tanggal):
     # tanggal dalam format DD/MM/YYYY
     listTanggal = []
@@ -26,6 +27,9 @@ def validasiTanggal(tanggal):
         print("Tanggal tidak sesuai format")
         return False 
     
+    print(listTanggal)
+
+    
     kabisat = (int(listTanggal[0]) % 400 == 0) or ((int(listTanggal[2]) % 100 != 0) and (int(listTanggal[2]) % 4 == 0))
 
     if int(listTanggal[1]) in ['01', '03', '05', '07', '08', '10', '12']:
@@ -36,6 +40,8 @@ def validasiTanggal(tanggal):
         return listTanggal[0] in range(1, 28)
     else:
         return False
+    
+
 
 def helper (userRole):
     if userRole=="admin":
@@ -64,6 +70,6 @@ def helper (userRole):
         print("save - menyimpan data ke dalam file setelah dilakukan perubahan")
         print("exit - keluar dari aplikasi")
         return ()
-     else:
-         print("login - untuk melakukan login ke dalam sistem")
-         print("exit - keluar dari aplikasi")   
+    else:
+        print("login - untuk melakukan login ke dalam sistem")
+        print("exit - keluar dari aplikasi")   

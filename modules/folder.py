@@ -112,5 +112,12 @@ def save(baseDir):
 
 def exits(baseDir):
     tempPath = '\\'.join([baseDir, 'savefiles\\temp'])
+    saveAtauTidak = input("Apakah anda mau menyimpan perubahan ? [y/n]: ")
+    if saveAtauTidak.strip().lower() == 'y': 
+        save(baseDir)
+    elif saveAtauTidak.strip().lower() == 'n':
+        pass
+    else:
+        print("Command tidak dikenali, program akan keluar tanpa menyimpan")
     removeDir(tempPath)
     sys.exit()
