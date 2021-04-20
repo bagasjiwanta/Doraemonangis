@@ -62,19 +62,19 @@ if __name__=="__main__":
             trx.pinjamambil(userRole, userID ,"gadget",gadgets,gadgetBorHis,inventory)
 
         elif command.lower().strip() == "kembalikan":
-            trx.kembali(userRole, userID, gadgets, inventory, gadgetRetHis)
+            trx.kembali(userRole, userID, gadgets, inventory, gadgetRetHis,gadgetBorHis)
 
         elif command.lower().strip() == "minta":
             trx.pinjamambil(userRole, userID,"consumable",consumables,consumablesHis,inventory)
 
         elif command.lower().strip() == "riwayatpinjam":
-            trx.history(userRole, "pinjam", userFiles, gadgets, gadgetBorHis)
+            trx.historypinjamambil(userRole, "pinjam", userFiles, gadgets, gadgetBorHis)
 
         elif command.lower().strip() == "riwayatkembali":
-            trx.history(userRole, "kembali", userFiles, gadgets, gadgetRetHis)
+            trx.historykembali(userRole, userFiles, gadgets, gadgetRetHis, gadgetBorHis)
 
         elif command.lower().strip() == "riwayatambil":
-            trx.history(userRole, "ambil", userFiles, consumables, consumablesHis)
+            trx.historypinjamambil(userRole, "ambil", userFiles, consumables, consumablesHis)
         
         elif command.lower().strip() == "save":
             folder.save(BASE_DIR)
@@ -83,4 +83,4 @@ if __name__=="__main__":
             others.helper(userRole)
                
         else:
-            print("command tidak dikenali, coba lagi")
+            print("\nCommand tidak dikenali. Periksa kembali masukan Anda!")

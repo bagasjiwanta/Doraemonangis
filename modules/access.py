@@ -43,11 +43,11 @@ def register(userListCsv, acc):
 def login(userListCsv, oldId, oldUserName, oldRole):
     found = True 
     while found:
-        username = input("Masukkan username: ").strip()
+        username = input("\nMasukkan username: ").strip()
         password = input("Masukkan password: ")
         for i in openParse(userListCsv):
             if i[1] == username and i[4] == password:
-                print("Login sukses, selamat datang %s\n" %username)
+                print("\nLogin sukses, selamat datang %s\n" %username)
                 found = False
                 status = i[5]
                 IDnum = i[0]
@@ -56,11 +56,11 @@ def login(userListCsv, oldId, oldUserName, oldRole):
 
         else:  # Jika tidak ditemukan username & password yang benar
             command = ''
-            print("Username atau password salah, ulangi login? [y/n]")
+            print("\nUsername atau password salah, ulangi login? [y/n]")
             while command.lower() != 'y':
                 command = input("> ")
                 if command.lower() == 'n':
                     found = False 
                     return oldUserName, oldRole, oldId
                 elif command.lower() != 'y':
-                    print("command tidak dikenali, ulangi login? [y/n]")               
+                    print("\nCommand tidak dikenali, ulangi login? [y/n]")               
