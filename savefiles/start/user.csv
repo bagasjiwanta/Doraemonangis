@@ -1,3 +1,8 @@
 id;username;nama;alamat;password;role
-000000;admin;-;-;admin;admin
-111111;usersatu;usersatu;usersatu;usersatu;user
+0;admin;Admin;-;admin;admin
+132131;mobita;Mobi Mobita;Tokyo;mobo;user
+126279;shijuka;Hashiju Kaju;Bojong Gede;kaju123;user
+234979;dennisheraldi;Dennis Heraldi;Tunggul Hitam;password;user
+290088;bagasjiwanta;Bagas Jiwanta;Denpasar;123456;user
+783249;spiderman;Peter Parker;Queens USA;spideykeren;user
+981282;doejohn;John Doe;Location Unknown;123456;user

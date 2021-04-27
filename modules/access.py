@@ -13,7 +13,7 @@ def register(userListCsv, acc):
             username = input("Masukkan username: ").strip()
             for x in openParse(userListCsv)[1:]:
                 if x[1] == username:
-                    print("username tidak tersedia, silahkan coba lagi")
+                    print("\nUsername tidak tersedia atau telah digunakan. Mohon masukkan username lain.\n")
                     break
             else:
                 found = True 
@@ -32,11 +32,11 @@ def register(userListCsv, acc):
 
         newUser = ';'.join([userId, username, nama, alamat, password, "user"])
         appendParse(newUser, userListCsv)
-        print("User baru telah ditambahkan")
+        print(f"\nUser {username} telah berhasil register ke dalam Kantong Ajaib.\n")
         return username
         
     else:
-        print("Anda tidak memiliki akses untuk melakukan registrasi\nSilahkan login sebagai admin")
+        print("Anda tidak memiliki akses untuk melakukan registrasi\nSilakan login sebagai admin\n")
         return ''
 
 
@@ -47,7 +47,7 @@ def login(userListCsv, oldId, oldUserName, oldRole):
         password = input("Masukkan password: ")
         for i in openParse(userListCsv):
             if i[1] == username and i[4] == password:
-                print("\nLogin sukses, selamat datang %s\n" %username)
+                print("\nHalo %s! Selamat datang di Kantong Ajaib. \n" %i[2])
                 found = False
                 status = i[5]
                 IDnum = i[0]

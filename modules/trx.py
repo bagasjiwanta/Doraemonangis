@@ -44,7 +44,7 @@ def pinjamambil(userRole, IDnum, jenis, itemListCsv, itemHisCsv, inventoryCsv):
                             newinventory = ';'.join([IDnum, itemID, itemList[i][1],str(jumlah),itemList[i][4]])
                             appendParse(newinventory, inventoryCsv)
                         
-                        print(f"Item {itemList[i][1]} (x{jumlah}) berhasil di{key}!\n")
+                        print(f"\nItem {itemList[i][1]} (x{jumlah}) berhasil di{key}!\n")
 
                         itemList[i][3]=str(int(itemList[i][3])-jumlah) #jumlah item yang tersedia berkurang
                         writeParse(combineParse(itemList), itemListCsv) #parsing list item dari matriks ke csv
@@ -57,12 +57,12 @@ def pinjamambil(userRole, IDnum, jenis, itemListCsv, itemHisCsv, inventoryCsv):
 
                         appendParse(newpinjam, itemHisCsv) #menambahkan baris baru pada history peminjaman/pengambilan
                     else: #jumlah item kurang
-                        print(f"Stok {jenis} kurang\n")
+                        print(f"\nStok {jenis} kurang\n")
 
         if notFound: #item tidak ditemukan
-            print("Tidak ada item dengan ID tersebut!\n")
+            print("\nTidak ada item dengan ID tersebut!\n")
     else:
-        print("Silakan login sebagai user\n")
+        print("\nSilakan login sebagai user\n")
 
 def kembali(userRole, IDnum, itemListCsv, inventoryCsv, gadgetRetHisCsv, gadgetBorHisCsv):
     itemList = parser.openParse(itemListCsv)
@@ -71,19 +71,29 @@ def kembali(userRole, IDnum, itemListCsv, inventoryCsv, gadgetRetHisCsv, gadgetB
     listkembali= parser.openParse(gadgetRetHisCsv)
 
     if userRole == "user":
-        print("\nList gadget yang dapat dikembalikan:")
         pengembalian=True #asumsi semua input valid termasuk jumlahkembali
         count=0 #penghitung urutan inventory
-        urutan=["" for i in range (len(itemList))]
         for i in range (len(listinventory)): #pengecekan isi inventory yang ingin dikembalikan
             if listinventory[i][0]==IDnum and listinventory[i][1][0]=="G" and listinventory[i][3]!="0":
-                urutan[count]=listinventory[i][2] #menyimpan data gadget yang dapat dikembalikan
                 count+=1
-                print(f"{count}. {listinventory[i][2]} (x{listinventory[i][3]})")
-        nomorpinjam=int(input("\nMasukan nomor peminjaman: "))
-        if nomorpinjam>count:
-            print("\nNomor peminjaman tidak valid. Periksa kembali masukan Anda!\n ")
+        
+        if count==0:
+            print("\nAnda telah mengembalikan seluruh item atau belum meminjam item apapun. Tidak ada item yang dapat dikembalikan.\n")
             pengembalian=False
+
+        if pengembalian:
+            print("\nList gadget yang dapat dikembalikan:")
+            count=0 #penghitung urutan inventory
+            urutan=["" for i in range (len(itemList))]
+            for i in range (len(listinventory)): #pengecekan isi inventory yang ingin dikembalikan
+                if listinventory[i][0]==IDnum and listinventory[i][1][0]=="G" and listinventory[i][3]!="0":
+                    urutan[count]=listinventory[i][2] #menyimpan data gadget yang dapat dikembalikan
+                    count+=1
+                    print(f"{count}. {listinventory[i][2]} (x{listinventory[i][3]})")
+            nomorpinjam=int(input("\nMasukan nomor peminjaman: "))
+            if nomorpinjam>count:
+                print("\nNomor peminjaman tidak valid. Periksa kembali masukan Anda!\n ")
+                pengembalian=False
         
         if pengembalian:
             tanggalkembali=input("Tanggal pengembalian (DD/MM/YYYY): ")
@@ -242,7 +252,7 @@ def historykembali(userRole, userCsv, itemListCsv, gadgetRetHisCsv, gadgetBorHis
 def cari(jenis,gadgets):
     listgadgets = parser.openParse(gadgets)[1:] #parsing file gadget.csv menjadi list
     if jenis=="rarity":
-        rarity=input("Masukkan rarity: ")
+        rarity=input("\nMasukkan rarity: ")
         print("\nHasil pencarian:\n")
         for i in range (len(listgadgets)):
             if listgadgets[i][4]==rarity:
@@ -252,8 +262,9 @@ def cari(jenis,gadgets):
                 print(f"Rarity           : {listgadgets[i][4]}")
                 print(f"Tahun Ditemukan  : {listgadgets[i][5]}\n")
     if jenis=="tahun":
-        tahun=input("Masukkan tahun: ")
+        tahun=input("\nMasukkan tahun: ")
         kategori=input("Masukkan kategori: ")
+        count=0 #penghitung hasil pencarian
         print("\nHasil pencarian:\n")
         for i in range (len(listgadgets)):
             if (kategori=="=" and listgadgets[i][5]==tahun) or (kategori==">" and listgadgets[i][5]>tahun) or (kategori=="<" and listgadgets[i][5]<tahun) or (kategori==">=" and listgadgets[i][5]>=tahun) or (kategori=="<=" and listgadgets[i][5]<=tahun):
@@ -262,4 +273,7 @@ def cari(jenis,gadgets):
                 print(f"Jumlah           : {listgadgets[i][3]} buah")
                 print(f"Rarity           : {listgadgets[i][4]}")
                 print(f"Tahun Ditemukan  : {listgadgets[i][5]}\n")
+                count+=1
+        if count==0:
+            print("Tidak ada gadget yang ditemukan.\n")
             

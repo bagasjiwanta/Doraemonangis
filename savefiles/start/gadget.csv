@@ -1,7 +1,10 @@
 id;nama;deskripsi;jumlah;rarity;tahun_ditemukan
-G1;Baling baling bambu;Bisa terbang;5;A;2000
-G2;Pintu kemana saja;Mau kemana-mana tinggal gas;2;A;1995
-G3;Kaca pembesar;Eh eh eh kok jadi besar;1;B;2010
-G4;Kamera pengganti baju;Mau coba baju yang mana ? letsgo aja;5;C;1999
-G5;Roti penerjemah;Belajar bahasa apa aja langsung bisa;10;C;2001
-G6;HAHAHIHI;aneh banget;100;S;2002
+G1;Gateway to Anywhere;Mau kemana-mana tinggal gas lewat pintu;40;S;1995
+G2;Baling baling bambu;Bisa terbang;50;S;2000
+G3;Kaca pembesar;Eh eh eh kok jadi besar;40;B;2010
+G4;Kamera pengganti baju;Mau coba baju yang mana ? letsgo aja;95;C;1999
+G5;Roti penerjemah;Belajar bahasa apa aja langsung bisa;100;C;2001
+G6;Rick Astley CD;Never gonna give you up, never gonna let you down.;30;A;2015
+G7;Powerbalance Band;Menjaga keseimbangan dan menambah kekuatan;102;A;2011
+G8;Tunak Tun;ayyooyoyoyoy;30;A;2006
+G9;Dakimakura Rias Gremory;Menguatkan napsu makan!;100;B;2006

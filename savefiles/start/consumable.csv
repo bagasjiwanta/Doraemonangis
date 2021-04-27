@@ -1,5 +1,11 @@
 id;nama;deskripsi;jumlah;rarity
-C1;Dorayaki;Kesukaan doraemon;7;S
-C2;Sushi ikan;~Fresh from the sea~;10;B
-C3;Ayam goreng;Sedapnye ayam goreng;2;A
+C1;Dessert Box;Pahit dan manis tapi enak;38;B
+C2;Beluga Caviar;~Fresh from the sea~ ;26;S
+C3;Ayam geprek;Sedapnye ayam goreng, kesukaan oopin;300;C
 C4;Donat JCO;Mainstream banget apalagi pas ultah temen;12;B
+C5;Dorayaki;Kesukaan doraemon;70;S
+C6;Dorayaki Rasa Nasi Rames;Dorayaki lowbudget tapi kesukaan banyak orang;22;A
+C7;Mint;Daun yang menyegarkan;16;A
+C8;Loach Pearl;Kekuatan menyembuhkan mistis;99;C
+C9;Bamboo;Bahan baku bamboo propeller-propeller;17;B
+C10;Debate Club;Bisa berdebat;96;B
