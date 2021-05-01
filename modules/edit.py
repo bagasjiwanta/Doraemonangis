@@ -77,7 +77,7 @@ def tambah(userRole,consumListCsv, gadgetListCsv):
                 else:
                     print("\n[ERROR] : Input rarity tidak valid!\n")
     else:
-        print("\nAnda tidak memiliki akses untuk menambah item\nSilakan login sebagai admin\n")
+        print("\n[ERROR] : Anda tidak memiliki akses untuk menambah item\nSilakan login sebagai admin\n")
 
 def hapus(userRole, consumListCsv, gadgetListCsv, inventoryCsv):
     listinventory=parser.openParse(inventoryCsv)
@@ -97,18 +97,23 @@ def hapus(userRole, consumListCsv, gadgetListCsv, inventoryCsv):
                     writeParse(combineParse(itemList), itemListCsv)
                     print(f"\nItem tersebut telah berhasil dihapus dari database.\n")
                     #menghapus item dari inventory
-                    for j in range(len(listinventory)):
-                        if listinventory[j][1]==itemID:
-                            listinventory.pop(j) #menghapus item dari database inventory
-                            writeParse(combineParse(listinventory), inventoryCsv)
-                    break
+                    try:
+                        for j in range(len(listinventory)):
+                            if listinventory[j][1]==itemID:
+                                listinventory.pop(j) #menghapus item dari database inventory
+                                writeParse(combineParse(listinventory), inventoryCsv)
+                        break
+                    except IndexError:
+                        pass
+                    finally:
+                        break
                 else:
                     print() 
                     break 
         else: 
             print("\n[ERROR] : Tidak ada item dengan ID tersebut.\n")
     else:
-        print("\n[ERROR} : Anda tidak memiliki akses untuk menghapus item\nSilakan login sebagai admin\n")
+        print("\n[ERROR] : Anda tidak memiliki akses untuk menghapus item\nSilakan login sebagai admin\n")
 
 def jumlah(userRole,consumListCsv, gadgetListCsv):
     listgadgets = parser.openParse(gadgetListCsv)
