@@ -11,32 +11,29 @@ def randomInt(digit):
 
 def validasiTanggal(tanggal):
     # tanggal dalam format DD/MM/YYYY
-    listTanggal = []
-    if len(tanggal) == 10:
-        for i in tanggal:
-            part = ''
-            if i != '/':
-                part += i
-            elif i == '/' or i == '0':
-                listTanggal.append(part)
-                continue
-            else:
-                print("Tanggal tidak sesuai format")
-                return False
-    else:
-        print("Tanggal tidak sesuai format")
+    if len(tanggal) != 10:
+        print("\n[ERROR] : Tanggal tidak sesuai format")
         return False 
-    
-    print(listTanggal)
 
-    
-    kabisat = (int(listTanggal[0]) % 400 == 0) or ((int(listTanggal[2]) % 100 != 0) and (int(listTanggal[2]) % 4 == 0))
+    listTanggal = []
+    part = '' 
+    for i in tanggal:
+        if i != '/':
+            part += i
+        else:
+            listTanggal.append(part)
+            part = ''
+    else:
+        listTanggal.append(part)
 
-    if int(listTanggal[1]) in ['01', '03', '05', '07', '08', '10', '12']:
-        return listTanggal[0] in range(1, 32)
-    elif listTanggal[1] == '02' and listTanggal[0] == '29':
+    listTanggal = [int(i) for i in listTanggal]
+    kabisat = (int(listTanggal[2]) % 400 == 0) or ((int(listTanggal[2]) % 100 != 0) and (int(listTanggal[2]) % 4 == 0))
+    
+    if int(listTanggal[1]) in [1, 3, 5, 7, 8, 10, 12]:
+        return listTanggal[0] in range(1, 32, 1)
+    elif listTanggal[1] == 2 and listTanggal[0] == 29:
         return kabisat
-    elif listTanggal[1] in ['02', '04', '06', '09', '11']:
+    elif listTanggal[1] in [2, 4, 6, 9, 11]:
         return listTanggal[0] in range(1, 28)
     else:
         return False

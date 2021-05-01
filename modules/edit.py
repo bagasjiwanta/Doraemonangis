@@ -7,57 +7,75 @@ def tambah(userRole,consumListCsv, gadgetListCsv):
     listgadgets = parser.openParse(gadgetListCsv)
     listconsum = parser.openParse(consumListCsv)
     continueinput=True
+
     if userRole=="admin":
         itemID=input("\nMasukan ID: ").strip()  #id item divalidasi terlebih dahulu
-        if itemID[0]=="G":
+
+        if itemID[0]=="G" and itemID[1:].isnumeric():
             validGadgetID=True
             validConsumID=False
+
             for i in range(len(listgadgets)):
                 if listgadgets[i][0]==itemID:
-                    print("\nGagal menambahkan item karena ID sudah ada.\n")
+                    print("\n[ERROR] : Gagal menambahkan item karena ID sudah ada.\n")
                     continueinput=False
-        elif itemID[0]=="C":
+
+        elif itemID[0]=="C" and itemID[1:].isnumeric():
             validConsumID=True
             validGadgetID=False
+
             for i in range(len(listconsum)):
                 if listconsum[i][0]==itemID:
-                    print("\nGagal menambahkan item karena ID sudah ada.\n")
+                    print("\n[ERROR] : Gagal menambahkan item karena ID sudah ada.\n")
                     continueinput=False
         else:
             continueinput=False
-            print("\nGagal menambahkan item karena ID tidak valid.\n")
+            print("\n[ERROR] : Gagal menambahkan item karena ID tidak valid.\n")
 
         if continueinput:
             nama=input("Masukan Nama: ")
             deskripsi=input("Masukan Deskripsi: ")
-            jumlah=input("Masukan Jumlah: ")
-            if jumlah.isnumeric()==True:
-                jumlahnum=int(jumlah)
+            if (';' in nama) or (';' in deskripsi):
+                print("\n[ERROR] : Nama atau deskripsi tidak boleh berisi ;")
+                return ''
+
+            try:
+                jumlah=int(input("Masukan Jumlah: "))
+                if (jumlah < 0):
+                    print("\nInput jumlah tidak valid!\n")
+                    return ''
+            except ValueError:
+                print("\n[ERROR] : Jumlah harus integer")
+                return ''
+
             else:
-                jumlahnum=0
-            if jumlahnum<0 or jumlah.isnumeric()==False:
-                print("\nInput jumlah tidak valid!\n")
-            else:
+                jumlah = str(jumlah)
                 rarity=input("Masukan Rarity: ")
-                validRarity=["S","A","B","C"]
-                if rarity in validRarity:
+                if rarity in ["S","A","B","C"]:
                     #untuk consumable input hanya sampai rarity
                     if validConsumID:
                         newConsum = ';'.join([itemID, nama, deskripsi, jumlah, rarity])
-                        appendParse(newConsum, consumListCsv)
-                        print("\nItem telah berhasil ditambahkan ke database.\n")
+                        try:
+                            appendParse(newConsum, consumListCsv)
+                            print("\nItem telah berhasil ditambahkan ke database.\n")
+                        except UnicodeEncodeError:
+                            print("\n[ERROR] : Nama/deskripsi anda mengandung karakter yang tidak dikenal")
+                            
                     
                     #untuk gadget input akan dilanjutkan sampai tahun
                     if validGadgetID:
                         tahun=int(input("Masukan tahun ditemukan: "))
                         if tahun<=0:
-                            print("Input tahun tidak valid!")
+                            print("\n[ERROR] : Input tahun tidak valid!")
                         else: #lulus semua syarat
                             newGadget = ';'.join([itemID, nama, deskripsi, jumlah, rarity, str(tahun)])
-                            appendParse(newGadget, gadgetListCsv)
-                            print("\nItem telah berhasil ditambahkan ke database.\n")
+                            try:
+                                appendParse(newGadget, gadgetListCsv)
+                                print("\nItem telah berhasil ditambahkan ke database.\n")
+                            except UnicodeEncodeError:
+                                print("\n[ERROR] : Nama/deskripsi anda mengandung karakter yang tidak dikenal")
                 else:
-                    print("\nInput rarity tidak valid!\n")
+                    print("\n[ERROR] : Input rarity tidak valid!\n")
     else:
         print("\nAnda tidak memiliki akses untuk menambah item\nSilakan login sebagai admin\n")
 
@@ -73,7 +91,7 @@ def hapus(userRole, consumListCsv, gadgetListCsv, inventoryCsv):
             itemListCsv=consumListCsv
         for i in range (len(itemList)):
             if itemList[i][0] == itemID:
-                caution = input(f"Apakah anda yakin ingin menghapus {itemList[i][1]} (Y/N)? ")
+                caution = input(f"[WARNING] : Apakah anda yakin ingin menghapus {itemList[i][1]} (Y/N)? ")
                 if caution.lower() == 'y':
                     itemList.pop(i) #menghapus item dari database gadget/consumables
                     writeParse(combineParse(itemList), itemListCsv)
@@ -88,9 +106,9 @@ def hapus(userRole, consumListCsv, gadgetListCsv, inventoryCsv):
                     print() 
                     break 
         else: 
-            print("\nTidak ada item dengan ID tersebut.\n")
+            print("\n[ERROR] : Tidak ada item dengan ID tersebut.\n")
     else:
-        print("\nAnda tidak memiliki akses untuk menghapus item\nSilakan login sebagai admin\n")
+        print("\n[ERROR} : Anda tidak memiliki akses untuk menghapus item\nSilakan login sebagai admin\n")
 
 def jumlah(userRole,consumListCsv, gadgetListCsv):
     listgadgets = parser.openParse(gadgetListCsv)
@@ -104,12 +122,16 @@ def jumlah(userRole,consumListCsv, gadgetListCsv):
             itemList=listconsum
             itemListCsv=consumListCsv
         else: #validasi ID
-            print("\nID tidak valid\n")
+            print("\n[ERROR] : ID tidak valid\n")
         notFound=True
         for i in range (len(itemList)): #pencarian item berdasarkan IDnya
             if itemList[i][0] == itemID:
                 notFound=False
-                jumlah=int(input("Masukan Jumlah: "))
+                try:
+                    jumlah=int(input("Masukan Jumlah: "))
+                except ValueError:
+                    print("\n[ERROR] : jumlah harus integer\n")
+                    return ''
                 if jumlah>=0:
                     itemList[i][3]=str(int(itemList[i][3])+jumlah)
                     print(f"\n{jumlah} {itemList[i][1]} berhasil ditambahkan. Stok sekarang: {itemList[i][3]}\n")
@@ -122,8 +144,9 @@ def jumlah(userRole,consumListCsv, gadgetListCsv):
                         writeParse(combineParse(itemList), itemListCsv)
                     elif int(itemList[i][3])<((-1)*jumlah):
                         jumlah=jumlah*(-1)
-                        print(f"\n{jumlah} {itemList[i][1]} gagal dibuang karena stok kurang. Stok sekarang: {itemList[i][3]} (<{jumlah})\n")
+                        print(f"[ERROR] : \n{jumlah} {itemList[i][1]} gagal dibuang karena stok kurang. "
+                        "Stok sekarang: {itemList[i][3]} (<{jumlah})\n")
         if notFound:
-            print("\nTidak ada item dengan ID tersebut!\n")
+            print("\n[ERROR] : Tidak ada item dengan ID tersebut!\n")
     else:
-        print("\nAnda tidak memiliki akses untuk mengubah jumlah item\nSilakan login sebagai admin\n")
+        print("\n[ERROR] : Anda tidak memiliki akses untuk mengubah jumlah item\nSilakan login sebagai admin\n")

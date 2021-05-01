@@ -78,6 +78,7 @@ def inputCli(baseDir):
     workdir = commandParser.folder.strip()
 
     workdir = folder.saveFolderValidator(workdir, ospath.join(baseDir, 'savefiles\\'))
+    print(workdir)
     if workdir == '*':
         keluar()
     elif ospath.exists('\\'.join([baseDir, 'savefiles\\temp'])):

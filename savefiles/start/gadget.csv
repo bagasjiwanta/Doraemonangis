@@ -1,10 +1,49 @@
 id;nama;deskripsi;jumlah;rarity;tahun_ditemukan
-G1;Gateway to Anywhere;Mau kemana-mana tinggal gas lewat pintu;40;S;1995
-G2;Baling baling bambu;Bisa terbang;50;S;2000
-G3;Kaca pembesar;Eh eh eh kok jadi besar;40;B;2010
-G4;Kamera pengganti baju;Mau coba baju yang mana ? letsgo aja;95;C;1999
-G5;Roti penerjemah;Belajar bahasa apa aja langsung bisa;100;C;2001
-G6;Rick Astley CD;Never gonna give you up, never gonna let you down.;30;A;2015
-G7;Powerbalance Band;Menjaga keseimbangan dan menambah kekuatan;102;A;2011
-G8;Tunak Tun;ayyooyoyoyoy;30;A;2006
-G9;Dakimakura Rias Gremory;Menguatkan napsu makan!;100;B;2006
+G1;Gene's Lamp;Anything you wish for, 3 times only !;1;S;69420
+G2;Jimi Hendrix's Stratocaster;LEGENDARY;1;S;2021;
+G3;Charming Perfume;Mencuri barang orang lain yang berdekatan;2;S;1996
+G5;Door to Anywhere;Paris ? Amerika ? Jerman ? Lets frickin' Go !;3;S;2020
+G6;Pacar;Nggak punya yaa ? haha;S;1;999
+G8;Lucky Golden Bell;Mendapat gaji tambahan setiap bulannya;5;A;2000
+G9;Top Racer's helmet;Melindungi kepala dari segala macam benturan;6;A;1980
+G10;Electromagnetic Field Generator;Mampu mendekatkan gebetan (bukan pelet);7;A;2010
+G11;Time Stone;Manipulate time, be a wizard;1;A;1420
+G12;Aplikasi Santet Online;Santet paku, kaca, bahkan santet kaca spion juga bisa;10;A;1720
+G13;Titan's Gauntlet;Mampu mengambil apa saja dari mana saja;5;A;2002
+G14;Enlarger Flashlight;eh eh eh kok tiba tiba besar ?!;15;A;1945
+G15;Lucky Charm;As lucky as you could be;2;A;2000
+G16;Lovesule (Love Capsule);Put your crush in, wait 15 minutes, and she/he is yours;1;A;3000
+G19;Bamboo-Copter;Wheeeeeeeeeeeeeeeeeeeeeeoooooooooooooaaaaaaaaaaaaa get this thing off fr-;15;B;3200
+G20;Time Cloth;Adult → Baby or Baby → Adult;12;B;2020
+G21;Translation Jelly;Fu*k TOEFL;1;B;2020
+G22;Forever Telephone;Talk to anybody even if he/she's already dead :(;1;B;3420
+G23;False Ticket;Ke hotel apapun bisa, ke Hotel Alexis juga bisa;3;B;2000
+G24;Bottle O' Enchanting;Level up !;200;B;2005
+G25;Kurious Kamera;Allows event-specific pictures to be taken anywhere;3;B;1998
+G26;Victoria's Secret Stove;A portable stove that can be used to access Cooking when outside of combat;5;B;1229
+G28;Samsung S69;Triple Camera, 69 megapixel, 6,9 inch screen, 690 nits brightness;5;B;2069
+G29;Cobaan;Menguatkan kita;10000;B;1
+G30;Tuyul;Profit go brrrrrrrr;5;B;1552
+G31;Pickup Grand Max;Mobil sport 2 pintu;6;B;2005
+G33;Keyboard;Di Tiap Studio pasti ada;3;B;1940
+G34;Tugas Kuliah;Banyak banget anjirr;99999999;B;1920
+G35;Air Kolam Intel ITB;Ijo, berlumut, jijik, kotor, gapernah dibersihin;3;B;1949
+G36;Broken Heart;What do you do with it ? How to bring it back ?;4;C;2019
+G37;Angry Bones;Throw these !;4;C;599
+G39;Black Card;What's this ? ;5;C;0000;
+G41;Kalkulator Scientific;Bisa regresi loh;4;C;1995
+G42;Kartu Remi;Spirit ? BlackJack ? Remi ? Minum ? letsgooo;13;C;1880
+G43;Corona Virus;Kenapa sih harus kuliah online;21200;C;2019
+G44;Bunga Mawar;Cocok Buat nembak cewek tapi nggak bakal diterima;5;C;100
+G45;Omongan Kasar;Generated automatically when the user is angry;99;C;-999
+G47;HP nokia;Lebih keras dari apapun;5;C;1996
+G48;Spesifikasi Tubes Daspro;Jalanin aja . . .;1;C;2021
+G49;Oven;Roast chicken babyyyyy -Gordon Rasmaya;1;C;2020
+G50;Voodoo Doll;What can you say ? Cut off it's head and you'll be dead;4;C;1
+G51;Indihomo;Suka mati kalau lagi penting;1500;C;2005;
+G52;Kaset Lagu Trio Kwek Kwek;Australia negeri wool - katanya katanya ~4;;C;2003
+G53;Airpods;Earphone sampah;4;C;2020
+G54;Keychron K2;Keyboard paling over-rated;1;C;2016
+G55;Gantungan kunci;Ya, gantungan kunci;4;C;1500
+G56;Bidang Singgung Kurva;Vektor normal cross Gradien di titik P;1;C;1883
+G57;Jet Pack;kiri kanan R1R2L1L2 atas bawah kiri kanan, kalo nggak tau berarti nggak punya masa kecil;4;C;2004

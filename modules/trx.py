@@ -14,7 +14,12 @@ def pinjamambil(userRole, IDnum, jenis, itemListCsv, itemHisCsv, inventoryCsv):
                 notFound=False
                 if itemID[0] == "C" and itemID[1:].isnumeric(): #validasi prefiks item
                     dapatmeminjam=True
-                    tanggal=input("Tanggal permintaan (DD/MM/YYYY): ")
+                    while True:
+                        tanggal=input("Tanggal permintaan (DD/MM/YYYY): ")
+                        if others.validasiTanggal(tanggal):
+                            break
+                        else:
+                            print("\n[ERROR] : Tanggal yang anda masukkan tidak valid, ulangi kembali")
                     jumlah=int(input("Jumlah permintaan: "))
                     key = "minta"
 
@@ -27,7 +32,12 @@ def pinjamambil(userRole, IDnum, jenis, itemListCsv, itemHisCsv, inventoryCsv):
                             break
 
                     if dapatmeminjam:
-                        tanggal=input("Tanggal peminjaman (DD/MM/YYYY): ")
+                        while True:
+                            tanggal=input("Tanggal peminjaman (DD/MM/YYYY): ")
+                            if others.validasiTanggal(tanggal):
+                                break 
+                            else:
+                                print("\n[ERROR] : Tanggal yang anda masukkan tidak valid, silahkan ulangi kembali")
                         jumlah=int(input("Jumlah peminjaman: "))
                         key = "pinjam"
                 if dapatmeminjam:
@@ -96,7 +106,12 @@ def kembali(userRole, IDnum, itemListCsv, inventoryCsv, gadgetRetHisCsv, gadgetB
                 pengembalian=False
         
         if pengembalian:
-            tanggalkembali=input("Tanggal pengembalian (DD/MM/YYYY): ")
+            while True:
+                tanggalkembali=input("Tanggal pengembalian (DD/MM/YYYY): ")
+                if others.validasiTanggal(tanggalkembali):
+                    break 
+                else:
+                    print("\n[ERROR] : Tanggal yang anda masukkan tidak valid, silahkan ulangi kembali")
             jumlahkembali=int(input("Masukan jumlah pengembalian: "))
 
             for i in range (len(listinventory)): #pengubahan jumlah inventory
@@ -132,6 +147,7 @@ def kembali(userRole, IDnum, itemListCsv, inventoryCsv, gadgetRetHisCsv, gadgetB
             print(f"\nItem {urutan[nomorpinjam-1]} (x{jumlahkembali}) telah dikembalikan.\n")
     else:
         print("\nSilakan login sebagai user\n")
+
 
 def historypinjamambil(userRole, jenis, userCsv, itemListCsv, itemHisCsv):
     if userRole == "admin":
@@ -187,6 +203,7 @@ def historypinjamambil(userRole, jenis, userCsv, itemListCsv, itemHisCsv):
 
     else:
         print("\nSilakan login sebagai admin\n")       
+
 
 def historykembali(userRole, userCsv, itemListCsv, gadgetRetHisCsv, gadgetBorHisCsv):
     if userRole == "admin":
@@ -248,6 +265,7 @@ def historykembali(userRole, userCsv, itemListCsv, gadgetRetHisCsv, gadgetBorHis
 
     else:
         print("\nSilakan login sebagai admin\n")   
+        
         
 def cari(jenis,gadgets):
     listgadgets = parser.openParse(gadgets)[1:] #parsing file gadget.csv menjadi list
