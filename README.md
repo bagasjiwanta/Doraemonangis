@@ -10,8 +10,12 @@ For further information, please check this [specification](https://docs.google.c
 2. Go to the project's main folder, and then open terminal
 3. run the main.py file with python with this script (make sure you have python3 installed) :
 ```
-python main.py
+python main.py start
+```
+note that `start` is a folder name at savefiles, when you create another savefile at anytime, you can open that by this command :
+```
+python main.py <your-savefile-name>
 ```
 4. For the commands, you can check at the specification above or type `help` at anytime to open the help menu
 
-Credit to Dennis and Vic
+## Previews
